@@ -38,10 +38,12 @@ namespace PassIn.Application.UseCases.Events.RegisterAttendee
 
         private void Validate(Guid eventId, RequestRegisterEventJson request)
         {
-            var eventExist = _dbContext.Events.Any(ev => ev.Id == eventId);
+            //var eventExist = _dbContext.Events.Any(ev => ev.Id == eventId);
+            var eventEntity = _dbContext.Events.Find(eventId);
 
-            if (eventExist == false)
-            {
+            //if (eventExist == false)
+            if (eventEntity is null)
+                {
                 throw new NotFoundException("An event with this id dont exists.");
             }
 
@@ -59,9 +61,16 @@ namespace PassIn.Application.UseCases.Events.RegisterAttendee
                 .Attendees
                 .Any(attendee => attendee.Email.Equals(request.Email) && attendee.Event_Id == eventId);
 
-            if (attendeeAlreadyRegistred)
+            if (attendeeAlreadyRegistred == true)
             {
                 throw new ErrorOnValidationException("You can not register twice on the same event.");
+            }
+
+            var attendeesForEvent = _dbContext.Attendees.Count(attendee => attendee.Event_Id == eventId);
+
+            if(attendeesForEvent > eventEntity.Maximum_Attendees)
+            {
+                throw new ErrorOnValidationException("There is no space left for registration on this event.");
             }
         }
 
