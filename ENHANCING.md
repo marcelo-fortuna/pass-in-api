@@ -1,5 +1,11 @@
 Melhorias:
 
+-- ASYNC -- 
+Transformar operações sincronas do entity framework para operações assíncronas visando melhoria de performace.
+
+-- Exception --
+Verificar e adicionar novos tratamentos de exceções.
+
 -- DATABASE --
 Alterar no banco de dados:
 
