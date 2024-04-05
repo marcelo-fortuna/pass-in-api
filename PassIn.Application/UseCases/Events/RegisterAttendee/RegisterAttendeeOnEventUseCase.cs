@@ -63,7 +63,7 @@ namespace PassIn.Application.UseCases.Events.RegisterAttendee
 
             if (attendeeAlreadyRegistred == true)
             {
-                throw new ErrorOnValidationException("You can not register twice on the same event.");
+                throw new ConflictException("You can not register twice on the same event.");
             }
 
             var attendeesForEvent = _dbContext.Attendees.Count(attendee => attendee.Event_Id == eventId);
