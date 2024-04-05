@@ -10,7 +10,7 @@ namespace PassIn.Application.UseCases.Events.GetById
         {
             var dbContext = new PassInDbContext();
 
-            var entity = dbContext.Events.Find(id);
+            var entity = dbContext.Events.Include(ev => ev.Attendees).FirstOrDefault(ev => ev.Id == id);
             //dbContext.Events.FirstOrDefault(ev => ev.Id == id);
 
             if(entity is null)

@@ -15,6 +15,7 @@
             var entity = _dbContext
                 .Events
                 .Include(ev => ev.Attendees)
+                .ThenInclude(attendee => attendee.Checkin)
                 .FirstOrDefault(ev => ev.Id == eventId);
 
             if (entity is null)
@@ -29,7 +30,8 @@
                     Id = attendee.Id,
                     Name = attendee.Name,
                     Email = attendee.Email,
-                    CreatedAt = attendee.Created_At
+                    CreatedAt = attendee.Created_At,
+                    CheckedInAt = attendee.CheckIn.Created_At
                 }).ToList()
             };
         }
