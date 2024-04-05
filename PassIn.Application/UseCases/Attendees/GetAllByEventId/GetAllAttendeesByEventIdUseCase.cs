@@ -31,7 +31,7 @@
                     Name = attendee.Name,
                     Email = attendee.Email,
                     CreatedAt = attendee.Created_At,
-                    CheckedInAt = attendee.CheckIn.Created_At
+                    CheckedInAt = attendee.CheckIn?.Created_At
                 }).ToList()
             };
         }
